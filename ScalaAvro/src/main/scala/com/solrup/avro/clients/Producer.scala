@@ -10,18 +10,17 @@ import org.apache.avro.specific.SpecificDatumWriter
 import java.io.ByteArrayOutputStream
 import org.apache.avro.io._
 import scala.io.Source
-import org.apache.kafka.clients.producer.{ KafkaProducer, ProducerRecord }
+import org.apache.kafka.clients.producer.{ KafkaProducer, ProducerRecord, ProducerConfig }
 
 class Producer() {
 
   private val props = new Properties()
 
-  props.put("bootstrap.servers", "localhost:9092")
-  props.put("message.send.max.retries", "5")
-  props.put("request.required.acks", "-1")
-  props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer")
-  props.put("value.serializer", "org.apache.kafka.common.serialization.ByteArraySerializer")
-  props.put("client.id", UUID.randomUUID().toString())
+  props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092")
+  props.put(ProducerConfig.RETRIES_CONFIG, "5")
+  props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer")
+  props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.ByteArraySerializer")
+  props.put(ProducerConfig.CLIENT_ID_CONFIG, UUID.randomUUID().toString())
 
   private val producer = new KafkaProducer[String, Array[Byte]](props)
 

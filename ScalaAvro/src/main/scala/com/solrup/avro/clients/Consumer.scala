@@ -25,10 +25,7 @@ class Consumer() {
   props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092")
   props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer")
   props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.ByteArrayDeserializer")
-
-  props.put("auto.offset.reset", "latest")
-  props.put("consumer.timeout.ms", "120000")
-  props.put("auto.commit.interval.ms", "10000")
+  props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "latest")
 
   private val consumer = new KafkaConsumer[String, Array[Byte]](props)
   consumer.subscribe(Collections.singletonList(this.topic))
